@@ -11,20 +11,23 @@
 
 <style>
 	body {margin:0px; padding:0px; background-color:#000;}
-	#myCanvas {position:absolute; background-color:#000;}
+	#myCanvas {position:absolute; background-color:#000;/* cursor: none;*/}
 </style>
 
 <script>
+
 var scaling = "fit"; // fit scales to fit the browser window while keeping the aspect ratio
 var width = 960;
 var height = 640;
 var frame = new zim.Frame(scaling, width, height); 
+
 frame.on("ready", function() {  
     console.log("ready from ZIM Frame");
     
     var stage = frame.stage;
     var stageW = frame.width;
     var stageH = frame.height;
+
     
     // used for tiles if there are tiles
     var squareW = 120;
@@ -35,7 +38,8 @@ frame.on("ready", function() {
     var manifest = [{id:"scrollerBack", src:"scrollerBack.png"},
                     {id:"scrollerMid", src:"scrollerMid.png"},
                     {id:"scrollerFront", src:"scrollerFront.png"},
-                    {id:"falcon", src:"falcon.png"} ];
+                    {id:"falcon", src:"falcon.png"},
+                    {id:"warningAsteroid", src:"warningAsteroid.png"}];
 
     var preload = new createjs.LoadQueue(false, imagePath);
     preload.loadManifest(manifest);
@@ -43,8 +47,9 @@ frame.on("ready", function() {
     
     
     function game() {
-        
         console.log("____Star Wars Falcon Run____"); 
+
+        var warningAsteroid = new createjs.Bitmap (preload.getResult("warningAsteroid"));
 
 //  scroller Back
 
@@ -55,7 +60,7 @@ frame.on("ready", function() {
         stage.addChild(scrollerBack2);
 
         var scrollerSpeed = 3;
-        var scroller1 = new zim.Scroller(scrollerBack, scrollerBack2, scrollerSpeed, -.2, false, 5);
+        var scroller1 = new zim.Scroller(scrollerBack, scrollerBack2, scrollerSpeed, -.05, false, 5);
 
 
 // scroller Mid
@@ -66,7 +71,7 @@ frame.on("ready", function() {
         var scrollerMid2 = new createjs.Bitmap (preload.getResult("scrollerMid"));
         stage.addChild(scrollerMid2);
 
-        var scroller2 = new zim.Scroller(scrollerMid, scrollerMid2, scrollerSpeed, -.5, false, 5);
+        var scroller2 = new zim.Scroller(scrollerMid, scrollerMid2, scrollerSpeed, -.08, false, 5);
 
 // scroller Front
 
@@ -76,7 +81,7 @@ frame.on("ready", function() {
         var scrollerFront2 = new createjs.Bitmap (preload.getResult("scrollerFront"));
         stage.addChild(scrollerFront2);
 
-        var scroller3 = new zim.Scroller(scrollerFront, scrollerFront2, scrollerSpeed, -.7, false, 5);
+        var scroller3 = new zim.Scroller(scrollerFront, scrollerFront2, scrollerSpeed, -.2, false, 5);
 
 //  adding the falcon
 
@@ -87,6 +92,38 @@ frame.on("ready", function() {
         zim.scale(falcon, .2);
         falcon.regX = falcon.getBounds().width/2;
         falcon.regY = falcon.getBounds().height/2;
+       
+// damping function
+
+        var damp = new zim.Damp(null, .04);
+        var damp2 = new zim.Damp(null, .04);
+
+
+        createjs.Ticker.framerate = 60;
+        createjs.Ticker.on("tick", function(){
+            falcon.x = damp.convert(stage.mouseX);
+            // falcon.y = damp2.convert(stage.mouseY);
+            console.log(scrollerMid.y);
+
+            if((scrollerMid.y > 50 && scrollerMid.y < 57) || (scrollerMid.y > 64 && scrollerMid.y < 71) || (scrollerMid.y > 78 && scrollerMid.y < 85)|| (scrollerMid.y > 92 && scrollerMid.y < 99)|| (scrollerMid.y > 106 && scrollerMid.y < 113)){
+                warningAsteroid.regX = warningAsteroid.getBounds().width/2;
+                warningAsteroid.regY = warningAsteroid.getBounds().height/2;
+                warningAsteroid.x = stageW/2; 
+                warningAsteroid.y = stageH/2; 
+                zim.scale(warningAsteroid, .7);
+
+                   stage.addChild(warningAsteroid);
+                   stage.update();
+
+        
+
+            } else {
+                stage.removeChild(warningAsteroid);
+            }
+            stage.update();
+        });
+
+
 
         stage.update(); 
     } 
