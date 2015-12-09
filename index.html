@@ -8,6 +8,11 @@
 <script src="http://d309knd7es5f10.cloudfront.net/zim_1.4.4_min.js"></script>
 <script src="http://code.createjs.com/createjs-2015.05.21.min.js"></script> 
 <!-- should use CDN links available from CreateJS and ZIM sites -->
+<script src="asteroid1.js"></script>
+<!-- <script src="asteroid2.js"></script>
+<script src="asteroid3.js"></script> -->
+<script src="asteroid4.js"></script>
+<!-- <script src="asteroidMid1.js"></script> -->
 
 <style>
 	body {margin:0px; padding:0px; background-color:#000;}
@@ -83,6 +88,38 @@ frame.on("ready", function() {
 
         var scroller3 = new zim.Scroller(scrollerFront, scrollerFront2, scrollerSpeed, -.2, false, 5);
 
+// adding asteroids
+        var asteroids = new createjs.Container;
+        stage.addChild(asteroids);
+
+        var asteroid1 = new lib.asteroid1();
+        asteroids.addChild(asteroid1);
+        zim.scale(asteroid1, .7);
+        asteroid1.x = 400;
+
+        // var asteroid2 = new lib.asteroid2();
+        // asteroids.addChild(asteroid2);
+        // zim.scale(asteroid2, .7);
+        // asteroid2.x = 200;
+
+        // var asteroid3 = new lib.asteroid3();
+        // stage.addChild(asteroid3);
+        // zim.scale(asteroid3, .7);
+        // stage.update();
+
+
+
+        var asteroid4 = new lib.asteroid4();
+        asteroids.addChild(asteroid4);
+        // zim.scale(asteroid4, 1);
+        asteroid4.x = 200;
+        asteroid4.y = 200;
+
+
+        // var asteroidMid1 = new lib.asteroidMid1();
+        // asteroids.addChild(asteroidMid1);
+        // zim.scale(asteroidMid1, .7);
+
 //  adding the falcon
 
         var falcon = new createjs.Bitmap (preload.getResult("falcon"));
@@ -102,9 +139,10 @@ frame.on("ready", function() {
         createjs.Ticker.framerate = 60;
         createjs.Ticker.on("tick", function(){
             falcon.x = damp.convert(stage.mouseX);
-            // falcon.y = damp2.convert(stage.mouseY);
             console.log(scrollerMid.y);
 
+
+// asteroid Field warning
             if((scrollerMid.y > 50 && scrollerMid.y < 57) || (scrollerMid.y > 64 && scrollerMid.y < 71) || (scrollerMid.y > 78 && scrollerMid.y < 85)|| (scrollerMid.y > 92 && scrollerMid.y < 99)|| (scrollerMid.y > 106 && scrollerMid.y < 113)){
                 warningAsteroid.regX = warningAsteroid.getBounds().width/2;
                 warningAsteroid.regY = warningAsteroid.getBounds().height/2;
