@@ -5,8 +5,8 @@
 <title>Falcon Run</title>
 
 <script>var zon = true; // true for comments from zim code</script>
-<script src="../../../code/zim_1.4.4.js"></script>
-<script src="../../../code/createjs-2015.05.21.min.js"></script> 
+<script src="http://d309knd7es5f10.cloudfront.net/zim_1.4.4_min.js"></script>
+<script src="http://code.createjs.com/createjs-2015.05.21.min.js"></script> 
 <!-- should use CDN links available from CreateJS and ZIM sites -->
 
 <style>
@@ -31,9 +31,12 @@ frame.on("ready", function() {
     var squareH = 90;
     var squareS = 20;
     
-    var imagePath = "images/";
-    var manifest = [{id:"backing", src:"autumn-leaves.jpg"},
-                    {id:"backing2", src:"autumn-leaves.jpg"}];
+    var imagePath = "img/";
+    var manifest = [{id:"scrollerBack", src:"scrollerBack.png"},
+                    {id:"scrollerMid", src:"scrollerMid.png"},
+                    {id:"scrollerFront", src:"scrollerFront.png"},
+                    {id:"falcon", src:"falcon.png"} ];
+
     var preload = new createjs.LoadQueue(false, imagePath);
     preload.loadManifest(manifest);
     preload.on("complete", game);
@@ -43,8 +46,48 @@ frame.on("ready", function() {
         
         console.log("____Star Wars Falcon Run____"); 
 
-        
-    
+//  scroller Back
+
+        var scrollerBack = new createjs.Bitmap (preload.getResult("scrollerBack"));
+        stage.addChild(scrollerBack);
+
+        var scrollerBack2 = new createjs.Bitmap (preload.getResult("scrollerBack"));
+        stage.addChild(scrollerBack2);
+
+        var scrollerSpeed = 3;
+        var scroller1 = new zim.Scroller(scrollerBack, scrollerBack2, scrollerSpeed, -.2, false, 5);
+
+
+// scroller Mid
+
+        var scrollerMid = new createjs.Bitmap (preload.getResult("scrollerMid"));
+        stage.addChild(scrollerMid);
+
+        var scrollerMid2 = new createjs.Bitmap (preload.getResult("scrollerMid"));
+        stage.addChild(scrollerMid2);
+
+        var scroller2 = new zim.Scroller(scrollerMid, scrollerMid2, scrollerSpeed, -.5, false, 5);
+
+// scroller Front
+
+        var scrollerFront = new createjs.Bitmap (preload.getResult("scrollerFront"));
+        stage.addChild(scrollerFront);
+
+        var scrollerFront2 = new createjs.Bitmap (preload.getResult("scrollerFront"));
+        stage.addChild(scrollerFront2);
+
+        var scroller3 = new zim.Scroller(scrollerFront, scrollerFront2, scrollerSpeed, -.7, false, 5);
+
+//  adding the falcon
+
+        var falcon = new createjs.Bitmap (preload.getResult("falcon"));
+        stage.addChild(falcon);
+        falcon.x = stageW/2;
+        falcon.y = stageH/5*4;
+        zim.scale(falcon, .2);
+        falcon.regX = falcon.getBounds().width/2;
+        falcon.regY = falcon.getBounds().height/2;
+
         stage.update(); 
     } 
 
