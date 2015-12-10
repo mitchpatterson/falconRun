@@ -4,8 +4,8 @@ var p; // shortcut to reference prototypes
 
 // library properties:
 lib.properties = {
-	width: 550,
-	height: 400,
+	width: 151,
+	height: 140,
 	fps: 24,
 	color: "#FFFFFF",
 	manifest: []
@@ -17,7 +17,7 @@ lib.properties = {
 
 
 
-(lib.Path_8_dark1 = function() {
+(lib.Path_8_a1dark = function() {
 	this.initialize();
 
 	// Layer 1
@@ -30,7 +30,7 @@ lib.properties = {
 p.nominalBounds = new cjs.Rectangle(0,0,53.8,114.1);
 
 
-(lib.Path_7_dark1 = function() {
+(lib.Path_7_a1dark = function() {
 	this.initialize();
 
 	// Layer 1
@@ -43,7 +43,7 @@ p.nominalBounds = new cjs.Rectangle(0,0,53.8,114.1);
 p.nominalBounds = new cjs.Rectangle(0,0,13.9,13.3);
 
 
-(lib.Path_6_dark1 = function() {
+(lib.Path_6_a1dark = function() {
 	this.initialize();
 
 	// Layer 1
@@ -56,7 +56,7 @@ p.nominalBounds = new cjs.Rectangle(0,0,13.9,13.3);
 p.nominalBounds = new cjs.Rectangle(0,0,10.7,8.9);
 
 
-(lib.Path_5_dark1 = function() {
+(lib.Path_5_a1dark = function() {
 	this.initialize();
 
 	// Layer 1
@@ -69,7 +69,7 @@ p.nominalBounds = new cjs.Rectangle(0,0,10.7,8.9);
 p.nominalBounds = new cjs.Rectangle(0,0,19.4,19.8);
 
 
-(lib.Path_4_dark1 = function() {
+(lib.Path_4_a1dark = function() {
 	this.initialize();
 
 	// Layer 1
@@ -82,7 +82,7 @@ p.nominalBounds = new cjs.Rectangle(0,0,19.4,19.8);
 p.nominalBounds = new cjs.Rectangle(0,0,19.4,19.8);
 
 
-(lib.Path_3_dark1 = function() {
+(lib.Path_3_a1dark = function() {
 	this.initialize();
 
 	// Layer 1
@@ -95,7 +95,7 @@ p.nominalBounds = new cjs.Rectangle(0,0,19.4,19.8);
 p.nominalBounds = new cjs.Rectangle(0.1,0,30,25.7);
 
 
-(lib.Path_2_dark1 = function() {
+(lib.Path_2_a1dark = function() {
 	this.initialize();
 
 	// Layer 1
@@ -113,31 +113,31 @@ p.nominalBounds = new cjs.Rectangle(0,0,31.8,25.3);
 	this.initialize();
 
 	// Layer 2
-	this.instance = new lib.Path_2_dark1();
+	this.instance = new lib.Path_2_a1dark();
 	this.instance.setTransform(76.7,59.6,1,1,0,0,0,15.9,12.6);
 	this.instance.alpha = 0.16;
 
-	this.instance_1 = new lib.Path_3_dark1();
+	this.instance_1 = new lib.Path_3_a1dark();
 	this.instance_1.setTransform(53,111.3,1,1,0,0,0,15,12.8);
 	this.instance_1.alpha = 0.16;
 
-	this.instance_2 = new lib.Path_4_dark1();
+	this.instance_2 = new lib.Path_4_a1dark();
 	this.instance_2.setTransform(58.2,22,1,1,0,0,0,9.7,9.9);
 	this.instance_2.alpha = 0.16;
 
-	this.instance_3 = new lib.Path_5_dark1();
+	this.instance_3 = new lib.Path_5_a1dark();
 	this.instance_3.setTransform(32.6,86.8,1,1,0,0,0,9.7,9.9);
 	this.instance_3.alpha = 0.16;
 
-	this.instance_4 = new lib.Path_6_dark1();
+	this.instance_4 = new lib.Path_6_a1dark();
 	this.instance_4.setTransform(78.2,106.8,1,1,0,0,0,5.4,4.4);
 	this.instance_4.alpha = 0.16;
 
-	this.instance_5 = new lib.Path_7_dark1();
+	this.instance_5 = new lib.Path_7_a1dark();
 	this.instance_5.setTransform(38.2,33.7,1,1,0,0,0,6.9,6.7);
 	this.instance_5.alpha = 0.16;
 
-	this.instance_6 = new lib.Path_8_dark1();
+	this.instance_6 = new lib.Path_8_a1dark();
 	this.instance_6.setTransform(124.9,61.5,1,1,0,0,0,26.9,57);
 	this.instance_6.alpha = 0.16;
 
@@ -147,7 +147,7 @@ p.nominalBounds = new cjs.Rectangle(0,0,31.8,25.3);
 
 	this.addChild(this.shape,this.instance_6,this.instance_5,this.instance_4,this.instance_3,this.instance_2,this.instance_1,this.instance);
 }).prototype = p = new cjs.Container();
-p.nominalBounds = new cjs.Rectangle(275,200,151.9,140.9);
+p.nominalBounds = new cjs.Rectangle(75.5,70,151.9,140.9);
 
 })(lib = lib||{}, images = images||{}, createjs = createjs||{}, ss = ss||{});
 var lib, images, createjs, ss;

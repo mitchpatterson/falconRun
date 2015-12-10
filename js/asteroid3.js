@@ -4,8 +4,8 @@ var p; // shortcut to reference prototypes
 
 // library properties:
 lib.properties = {
-	width: 550,
-	height: 400,
+	width: 192,
+	height: 188,
 	fps: 24,
 	color: "#FFFFFF",
 	manifest: []
@@ -108,7 +108,7 @@ p.nominalBounds = new cjs.Rectangle(0,0,22.3,25.1);
 p.nominalBounds = new cjs.Rectangle(0.1,0.1,34.6,32.4);
 
 
-(lib.Path_0_a3 = function() {
+(lib.Path_a3 = function() {
 	this.initialize();
 
 	// Layer 1
@@ -126,7 +126,7 @@ p.nominalBounds = new cjs.Rectangle(0.1,0,52.8,46);
 	this.initialize();
 
 	// Layer 2
-	this.instance = new lib.Path_0_a3();
+	this.instance = new lib.Path_a3();
 	this.instance.setTransform(96.5,95.8,1,1,0,0,0,26.4,23);
 	this.instance.alpha = 0.16;
 
@@ -164,7 +164,7 @@ p.nominalBounds = new cjs.Rectangle(0.1,0,52.8,46);
 
 	this.addChild(this.shape,this.instance_7,this.instance_6,this.instance_5,this.instance_4,this.instance_3,this.instance_2,this.instance_1,this.instance);
 }).prototype = p = new cjs.Container();
-p.nominalBounds = new cjs.Rectangle(275,200,192.8,188.4);
+p.nominalBounds = new cjs.Rectangle(96,94,192.8,188.4);
 
 })(lib = lib||{}, images = images||{}, createjs = createjs||{}, ss = ss||{});
 var lib, images, createjs, ss;
