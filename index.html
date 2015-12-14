@@ -211,6 +211,7 @@ frame.on("ready", function() {
                 randAsteroid.setBounds(0,0,100,100);
                 randAsteroid.x = zim.rand(stageW);
                 randAsteroid.y = -250;
+                randAsteroid.r = zim.rand(.1,5,false);
                 stage.update();
 
                 createjs.Tween.get(randAsteroid).to({y:stageH+200}, 5000).call(removeAsteroids);
@@ -286,6 +287,9 @@ frame.on("ready", function() {
             clickTest = true;
         });
 
+        var asteroid;
+        var laser;
+
         createjs.Ticker.framerate = 60;
         createjs.Ticker.on("tick", function(){
             
@@ -302,7 +306,9 @@ frame.on("ready", function() {
                 }
 
                 for(i=0;i<asteroids.numChildren; i++){
-                    if (zim.hitTestBounds(asteroids.getChildAt(i), falcon, 8)) {
+                    asteroid = asteroids.getChildAt(i);
+                    asteroid.rotation+= asteroid.r;
+                    if (zim.hitTestCircle(asteroid, falcon)) {
                         console.log("hit");
                         wholeFalcon.removeChild(falcon);
                         startCheck = false;
@@ -310,7 +316,15 @@ frame.on("ready", function() {
                         clearInterval(interval);
                     }
 
-                    }  
+                    for(j=0;j<lasers.numChildren;j++) {
+                        laser = lasers.getChildAt(j);
+                        if (zim.hitTestRect(asteroid, laser)) {
+                            console.log("hit");
+                            asteroid.x = -2000;
+                        }
+                    }
+
+                }  
 
                 // asteroidBelt appears
 
