@@ -6,7 +6,7 @@
 
 <script>var zon = true; // true for comments from zim code</script>
 <script src="http://d309knd7es5f10.cloudfront.net/zim_1.4.4_min.js"></script>
-<script src="http://code.createjs.com/createjs-2015.05.21.min.js"></script> 
+<script src="http://code.createjs.com/createjs-2015.05.21.min.js"></script>
 <!-- should use CDN links available from CreateJS and ZIM sites -->
 <script src="js/asteroid1.js"></script>
 <script src="js/asteroid2.js"></script>
@@ -35,21 +35,21 @@
 var scaling = "fit"; // fit scales to fit the browser window while keeping the aspect ratio
 var width = 960;
 var height = 640;
-var frame = new zim.Frame(scaling, width, height); 
+var frame = new zim.Frame(scaling, width, height);
 
-frame.on("ready", function() {  
+frame.on("ready", function() {
     console.log("ready from ZIM Frame");
-    
+
     var stage = frame.stage;
     var stageW = frame.width;
     var stageH = frame.height;
 
-    
+
     // used for tiles if there are tiles
     var squareW = 120;
     var squareH = 90;
     var squareS = 20;
-    
+
     var imagePath = "img/";
     var manifest = [{id:"scrollerBack", src:"scrollerBack.png"},
                     {id:"scrollerMid", src:"scrollerMid.png"},
@@ -62,10 +62,31 @@ frame.on("ready", function() {
     var preload = new createjs.LoadQueue(false, imagePath);
     preload.loadManifest(manifest);
     preload.on("complete", game);
-    
-    
+
+		var soundPath = "sounds/";
+		var manifestSound = [{id:"chewie", src:"chewieDistress.mp3"},
+												 {id:"asteroidChase", src:"asteroidChase.mp3"},
+											 	 {id:"falconVsTieFighter", src:"falconVsTieFighter.mp3"},
+											 	 {id:"jumpToLightspeed", src:"jumpToLightspeed.mp3"},
+											   {id:"quadLaserTurrentFire", src:"quadLaserTurrentFire.mp3"},
+											   {id:"badFeeling", src:"badFeeling.mp3"},
+												 {id:"goodMorning", src:"goodMorning.mp3"},
+										 		 {id:"yahoo", src:"yahoo.mp3"},
+										 		 {id:"ow", src:"ow.mp3"},
+										 		 {id:"beAlright", src:"beAlright.mp3"},
+										 		 {id:"asteroidWarning", src:"asteroidWarning.mp3"},
+											 	 {id:"mainTheme", src:"mainTheme.mp3"}];
+
+		var preloadSound = new createjs.LoadQueue(false, soundPath);
+		preloadSound.installPlugin(createjs.Sound);
+    preloadSound.loadManifest(manifestSound);
+    preloadSound.on("complete", game);
+
+
     function game() {
-        console.log("____Star Wars Falcon Run____"); 
+        console.log("____Star Wars Falcon Run____");
+
+				createjs.Sound.play("mainTheme");
 
         var warningAsteroid = new createjs.Bitmap (preload.getResult("warningAsteroid"));
 
@@ -130,64 +151,64 @@ frame.on("ready", function() {
         stage.addChild(asteroids);
 
         var asteroid1 = new lib.asteroid1();
-        asteroid1.setBounds(0, 0, 100, 100);
+        asteroid1.setBounds(0, 0, 151.8, 141);
         // asteroids.addChild(asteroid1);
 
         var asteroid2 = new lib.asteroid2();
-        asteroid2.setBounds(0, 0, 100, 100);
+        asteroid2.setBounds(0, 0, 84, 61.5);
         console.log(asteroid2.height);
         // asteroids.addChild(asteroid2);
 
         var asteroid3 = new lib.asteroid3();
-        asteroid3.setBounds(0, 0, 100, 100);
+        asteroid3.setBounds(0, 0, 192.8, 188.6);
         // asteroids.addChild(asteroid3);
 
         var asteroid4 = new lib.asteroid4();
-        asteroid4.setBounds(0, 0, 100, 100);
+        asteroid4.setBounds(0, 0, 33.9, 35);
         // asteroids.addChild(asteroid4);
 
         var asteroid5 = new lib.asteroid5();
-        asteroid5.setBounds(0, 0, 100, 100);
+        asteroid5.setBounds(0, 0, 241.8, 153);
         // asteroids.addChild(asteroid5);
 
         var asteroid1med = new lib.asteroid1med();
-        asteroid1med.setBounds(0, 0, 100, 100);
+        asteroid1med.setBounds(0, 0, 151.8, 141);
         // asteroids.addChild(asteroid1med);
 
         var asteroid2med = new lib.asteroid2med();
-        asteroid2med.setBounds(0, 0, 100, 100);
+        asteroid2med.setBounds(0, 0, 84, 61.5);
         // asteroids.addChild(asteroid2med);
 
         var asteroid3med = new lib.asteroid3med();
-        asteroid3med.setBounds(0, 0, 100, 100);
+        asteroid3med.setBounds(0, 0, 192.8, 188.6);
         // asteroids.addChild(asteroid3med);
 
         var asteroid4med = new lib.asteroid4med();
-        asteroid4med.setBounds(0, 0, 100, 100);
+        asteroid4med.setBounds(0, 0, 33.9, 35);
         // asteroids.addChild(asteroid4med);
 
         var asteroid5med = new lib.asteroid5med();
-        asteroid5med.setBounds(0, 0, 100, 100);
+        asteroid5med.setBounds(0, 0, 241.8, 153);
         // asteroids.addChild(asteroid5med);
 
         var asteroid1dark = new lib.asteroid1dark();
-        asteroid1dark.setBounds(0, 0, 100, 100);
+        asteroid1dark.setBounds(0, 0, 151.8, 141);
         // asteroids.addChild(asteroid1dark);
 
         var asteroid2dark = new lib.asteroid2dark();
-        asteroid2dark.setBounds(0, 0, 100, 100);
+        asteroid2dark.setBounds(0, 0, 84, 61.5);
         // asteroids.addChild(asteroid2dark);
 
         var asteroid3dark = new lib.asteroid3dark();
-        asteroid3dark.setBounds(0, 0, 100, 100);
+        asteroid3dark.setBounds(0, 0, 192.8, 188.6);
         // asteroids.addChild(asteroid3dark);
 
         var asteroid4dark = new lib.asteroid4dark();
-        asteroid4dark.setBounds(0, 0, 100, 100);
+        asteroid4dark.setBounds(0, 0, 33.9, 35);
         // asteroids.addChild(asteroid4dark);
 
         var asteroid5dark = new lib.asteroid5dark();
-        asteroid5dark.setBounds(0, 0, 100, 100);
+        asteroid5dark.setBounds(0, 0, 241.8, 153);
         // asteroids.addChild(asteroid5dark);
 
 // function used to create asteroids off screen at random
@@ -196,25 +217,25 @@ frame.on("ready", function() {
 
         function asteroidBelt() {
 
-            var asteroidArray = [asteroid1, asteroid2, asteroid3, asteroid4, asteroid5, 
+            var asteroidArray = [asteroid1, asteroid2, asteroid3, asteroid4, asteroid5,
                         asteroid1med, asteroid2med, asteroid3med, asteroid4med, asteroid5med,
                         asteroid1dark, asteroid2dark, asteroid3dark, asteroid4dark, asteroid5dark];
 
 
             function createAsteroids() {
                 var rand = Math.floor(Math.random() * asteroidArray.length);
-                return asteroids.addChild(asteroidArray[rand]);
+								return asteroids.addChild(asteroidArray[rand]);
             }
 
             interval = setInterval(function(){
                 randAsteroid = createAsteroids();
-                randAsteroid.setBounds(0,0,100,100);
+								zim.centerReg(randAsteroid);
                 randAsteroid.x = zim.rand(stageW);
-                randAsteroid.y = -250;
+                randAsteroid.y = -150;
                 randAsteroid.r = zim.rand(.1,5,false);
                 stage.update();
 
-                createjs.Tween.get(randAsteroid).to({y:stageH+200}, 5000).call(removeAsteroids);
+                createjs.Tween.get(randAsteroid).to({y:stageH+150}, 5000).call(removeAsteroids);
 
             }, 2000);
 
@@ -231,7 +252,7 @@ frame.on("ready", function() {
         stage.addChild(wholeFalcon);
 
         var falcon = new lib.falcon();
-        falcon.setBounds(0, 0, 100, 100);
+        falcon.setBounds(0, 0, 332, 484.8);
         // stage.addChild(falcon);
         falcon.x = stageW/2;
         falcon.y = stageH/5*4;
@@ -240,19 +261,19 @@ frame.on("ready", function() {
         falcon.regY = falcon.getBounds().height/2;
 
 // adding falcon lasers
-        
+
         var lasers = new createjs.Container();
         wholeFalcon.addChild(lasers);
 
         var falconX;
         function createLasers(){
             var laser1 = new zim.Rectangle(5,15,"red");
-            laser1.x = falconX + falcon.regX/2;
+            laser1.x = falconX + 10;
             laser1.y = stageH/5*4;
             lasers.addChild(laser1);
 
             var laser2 = new zim.Rectangle(5,15,"red");
-            laser2.x = falconX + falcon.regX/4;
+            laser2.x = falconX - 10;
             laser2.y = stageH/5*4;
             lasers.addChild(laser2);
             // return laser1;
@@ -260,31 +281,44 @@ frame.on("ready", function() {
             stage.update();
 
             createjs.Tween.get(laser1).to({y:-25}, 2000).call(removeLasers);
-            createjs.Tween.get(laser2).to({y:-25}, 2000).call(removeLasers);            
+            createjs.Tween.get(laser2).to({y:-25}, 2000).call(removeLasers);
 
         }
 
         function removeLasers(e){
             wholeFalcon.removeChild(e.target);
             stage.update();
-            console.log("lasers gone");            
+            console.log("lasers gone");
         }
-       
+
+				var countLasers = 0;
+				var clickTest = false;
+				window.addEventListener("click", laserChecker);
+
+				function laserChecker(){
+					if(countLasers < 1){
+						clickTest = true;
+						countLasers = countLasers + 1;
+					} else {
+						window.removeEventListener("click", laserChecker);
+						setTimeout(function(){
+							countLasers = 0;
+							window.addEventListener("click", laserChecker);
+						}, 5000);
+					}
+				}
+
 // damping function
 
         var damp = new zim.Damp(null, .04);
 
-        var startCheck = false; 
+        var startCheck = false;
         startButton.addEventListener("click", function(){
             scrollerMid.y = 0;
+						createjs.Sound.stop("mainTheme");
             stage.removeChild(startScreen);
             startCheck = true;
             wholeFalcon.addChild(falcon);
-        });
-
-        var clickTest = false;
-        window.addEventListener("click", function(){
-            clickTest = true;
         });
 
         var asteroid;
@@ -292,12 +326,13 @@ frame.on("ready", function() {
 
         createjs.Ticker.framerate = 60;
         createjs.Ticker.on("tick", function(){
-            
+
             falcon.x = damp.convert(stage.mouseX);
             falconX = falcon.x;
 
             if(startCheck) {
                 warningAppear();
+								createjs.Sound.play("asteroidWarning");
 
                 if(clickTest){
                     createLasers();
@@ -324,15 +359,15 @@ frame.on("ready", function() {
                         }
                     }
 
-                }  
+                }
 
                 // asteroidBelt appears
 
-                if(scrollerMid.y > 110 && scrollerMid.y <300) {
+                if(scrollerMid.y > 110 && scrollerMid.y <500) {
                     if(!scrollCheck){
                         asteroidBelt();
                         scrollCheck = true;
-                    } 
+                    }
                 } else {
                     if(scrollCheck){
                         clearInterval(interval);
@@ -354,8 +389,8 @@ frame.on("ready", function() {
             if((scrollerMid.y > 50 && scrollerMid.y < 57) || (scrollerMid.y > 64 && scrollerMid.y < 71) || (scrollerMid.y > 78 && scrollerMid.y < 85)|| (scrollerMid.y > 92 && scrollerMid.y < 99)|| (scrollerMid.y > 106 && scrollerMid.y < 113)){
                 warningAsteroid.regX = warningAsteroid.getBounds().width/2;
                 warningAsteroid.regY = warningAsteroid.getBounds().height/2;
-                warningAsteroid.x = stageW/2; 
-                warningAsteroid.y = stageH/2; 
+                warningAsteroid.x = stageW/2;
+                warningAsteroid.y = stageH/2;
                 zim.scale(warningAsteroid, .7);
 
                    stage.addChild(warningAsteroid);
@@ -369,8 +404,8 @@ frame.on("ready", function() {
 
 
 
-        stage.update(); 
-    } 
+        stage.update();
+    }
 
 });
 
