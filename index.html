@@ -50,43 +50,36 @@ frame.on("ready", function() {
     var squareH = 90;
     var squareS = 20;
 
-    var imagePath = "img/";
+    var mediaPath = "imgANDsounds/";
     var manifest = [{id:"scrollerBack", src:"scrollerBack.png"},
                     {id:"scrollerMid", src:"scrollerMid.png"},
                     {id:"scrollerFront", src:"scrollerFront.png"},
                     {id:"falcon", src:"falcon.png"},
                     {id:"warningAsteroid", src:"warningAsteroid.png"},
                     {id:"title", src:"falconRun_title.png"},
-                    {id:"startButton", src:"falconRun_button.png"}];
+                    {id:"startButton", src:"falconRun_button.png"},
+										{id:"chewie", src:"chewieDistress.mp3"},
+										{id:"asteroidChase", src:"asteroidChase.mp3"},
+										{id:"falconVsTieFighter", src:"falconVsTieFighter.mp3"},
+										{id:"jumpToLightspeed", src:"jumpToLightspeed.mp3"},
+										{id:"quadLaserTurrentFire", src:"quadLaserTurrentFire.mp3"},
+										{id:"badFeeling", src:"badFeeling.mp3"},
+									  {id:"goodMorning", src:"goodMorning.mp3"},
+										{id:"yahoo", src:"yahoo.mp3"},
+									  {id:"ow", src:"ow.mp3"},
+										{id:"beAlright", src:"beAlright.mp3"},
+										{id:"asteroidWarning", src:"asteroidWarning.mp3"},
+										{id:"mainTheme", src:"mainTheme.mp3"}];
 
-    var preload = new createjs.LoadQueue(false, imagePath);
+    var preload = new createjs.LoadQueue(false, mediaPath);
+		preload.installPlugin(createjs.Sound);
     preload.loadManifest(manifest);
     preload.on("complete", game);
-
-		var soundPath = "sounds/";
-		var manifestSound = [{id:"chewie", src:"chewieDistress.mp3"},
-												 {id:"asteroidChase", src:"asteroidChase.mp3"},
-											 	 {id:"falconVsTieFighter", src:"falconVsTieFighter.mp3"},
-											 	 {id:"jumpToLightspeed", src:"jumpToLightspeed.mp3"},
-											   {id:"quadLaserTurrentFire", src:"quadLaserTurrentFire.mp3"},
-											   {id:"badFeeling", src:"badFeeling.mp3"},
-												 {id:"goodMorning", src:"goodMorning.mp3"},
-										 		 {id:"yahoo", src:"yahoo.mp3"},
-										 		 {id:"ow", src:"ow.mp3"},
-										 		 {id:"beAlright", src:"beAlright.mp3"},
-										 		 {id:"asteroidWarning", src:"asteroidWarning.mp3"},
-											 	 {id:"mainTheme", src:"mainTheme.mp3"}];
-
-		var preloadSound = new createjs.LoadQueue(false, soundPath);
-		preloadSound.installPlugin(createjs.Sound);
-    preloadSound.loadManifest(manifestSound);
-    preloadSound.on("complete", game);
-
 
     function game() {
         console.log("____Star Wars Falcon Run____");
 
-				createjs.Sound.play("mainTheme");
+				// createjs.Sound.play("mainTheme");
 
         var warningAsteroid = new createjs.Bitmap (preload.getResult("warningAsteroid"));
 
@@ -156,7 +149,6 @@ frame.on("ready", function() {
 
         var asteroid2 = new lib.asteroid2();
         asteroid2.setBounds(0, 0, 84, 61.5);
-        console.log(asteroid2.height);
         // asteroids.addChild(asteroid2);
 
         var asteroid3 = new lib.asteroid3();
@@ -315,7 +307,7 @@ frame.on("ready", function() {
         var startCheck = false;
         startButton.addEventListener("click", function(){
             scrollerMid.y = 0;
-						createjs.Sound.stop("mainTheme");
+						// createjs.Sound.stop("mainTheme");
             stage.removeChild(startScreen);
             startCheck = true;
             wholeFalcon.addChild(falcon);
@@ -332,7 +324,7 @@ frame.on("ready", function() {
 
             if(startCheck) {
                 warningAppear();
-								createjs.Sound.play("asteroidWarning");
+								// createjs.Sound.play("asteroidWarning");
 
                 if(clickTest){
                     createLasers();
