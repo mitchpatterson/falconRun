@@ -38,7 +38,6 @@ var height = 640;
 var frame = new zim.Frame(scaling, width, height, false);
 
 frame.on("ready", function() {
-    console.log("ready from ZIM Frame");
 
     var stage = frame.stage;
     var stageW = frame.width;
@@ -54,11 +53,28 @@ frame.on("ready", function() {
     var manifest = [{id:"scrollerBack", src:"scrollerBack.png"},
                     {id:"scrollerMid", src:"scrollerMid.png"},
 										{id:"gameover", src:"gameOver_gameOver.png"},
+										{id:"youWin", src:"youwin_youWin.png"},
 										{id:"asteroidpng", src:"asteroid1_asteroid1.png"},
+										{id:"asteroid2png", src:"asteroids_asteroid2.png"},
+										{id:"asteroid3png", src:"asteroids_asteroid3.png"},
+										{id:"asteroid4png", src:"asteroids_asteroid4.png"},
+										{id:"asteroid5png", src:"asteroids_asteroid5.png"},
+										{id:"asteroid6png", src:"asteroids_asteroid6.png"},
+										{id:"asteroid7png", src:"asteroids_asteroid7.png"},
+										{id:"asteroid8png", src:"asteroids_asteroid8.png"},
+										{id:"asteroid9png", src:"asteroids_asteroid9.png"},
+										{id:"asteroid10png", src:"asteroids_asteroid10.png"},
+										{id:"asteroid11png", src:"asteroids_asteroid11.png"},
+										{id:"asteroid12png", src:"asteroids_asteroid12.png"},
+										{id:"asteroid13png", src:"asteroids_asteroid13.png"},
+										{id:"asteroid14png", src:"asteroids_asteroid14.png"},
+										{id:"asteroid15png", src:"asteroids_asteroid15.png"},
 										{id:"tieFighter", src:"tieFighter_tieFighter.png"},
                     {id:"scrollerFront", src:"scrollerFront.png"},
                     {id:"falcon", src:"falcon.png"},
+										{id:"hyperspeedCaption", src:"hyperspeed_hyperspeedCaption.png"},
                     {id:"warningAsteroid", src:"warningAsteroid.png"},
+										{id:"tieFighterWarning", src:"tieFighterWarning_tieFighterWarning.png"},
                     {id:"title", src:"falconRun_title.png"},
                     {id:"startButton", src:"falconRun_button.png"},
 										{id:"chewie", src:"chewieDistress.mp3"},
@@ -85,6 +101,9 @@ frame.on("ready", function() {
 				createjs.Sound.play("mainTheme");
 
         var warningAsteroid = new createjs.Bitmap (preload.getResult("warningAsteroid"));
+				var hyperspeedCaption = new createjs.Bitmap (preload.getResult("hyperspeedCaption"));
+				var tieFighterWarning = new createjs.Bitmap (preload.getResult("tieFighterWarning"));
+				var tieFighter = new createjs.Bitmap (preload.getResult("tieFighter"));
 
 //  scroller Back
 
@@ -183,10 +202,43 @@ frame.on("ready", function() {
 				tryAgain.y = stageH/2 + 125;
 				endScreen.addChild(tryAgain);
 
+// adding winning screen
+
+				var winScreen = new createjs.Container();
+
+				var winDarkScreen = new zim.Rectangle(stageW, stageH, "black");
+				winScreen.addChild(winDarkScreen);
+				winDarkScreen.alpha = 0.8;
+
+				var youWin = new createjs.Bitmap(preload.getResult("youWin"));
+				youWin.regX = youWin.getBounds().width/2;
+				youWin.regY = youWin.getBounds().height/2;
+				youWin.x = stageW/2;
+				youWin.y = stageH/2;
+				winScreen.addChild(youWin);
+
+				var restartContainer = new zim.Rectangle(300,50,"black");
+				restartContainer.alpha = 0.01;
+				zim.centerReg(restartContainer);
+				restartContainer.x = stageW/2;
+				restartContainer.y = stageH/2 + 125;
+				winScreen.addChild(restartContainer);
+
+				restartContainer.on("mousedown", function(){
+					stage.removeAllChildren();
+					game();
+				})
+
+				var restart = new createjs.Text("RESTART", "20px Arial", "white");
+				zim.centerReg(restart);
+				restart.x = stageW/2;
+				restart.y = stageH/2 + 125;
+				winScreen.addChild(restart);
+
 
 // adding asteroids
-        var asteroids = new createjs.Container;
-        stage.addChild(asteroids);
+        var obstacles = new createjs.Container;
+        stage.addChild(obstacles);
 
         // var asteroid1 = new lib.asteroid1();
         // asteroid1.setBounds(0, 0, 151.8, 141);
@@ -251,32 +303,44 @@ frame.on("ready", function() {
 // function used to create asteroids off screen at random
         var scrollCheck = false;
         var interval;
+				var tieCheck = false;
+				var obstacle;
+				var makeObstacle;
 
-        function asteroidBelt() {
+        function obstacleFactory() {
 
-            var asteroidArray = ["asteroidpng"];
+            var asteroidArray = ["asteroidpng", "asteroid2png", "asteroid3png", "asteroid4png", "asteroid5png", "asteroid6png", "asteroid7png", "asteroid8png", "asteroid9png", "asteroid10png", "asteroid11png", "asteroid12png", "asteroid13png", "asteroid14png", "asteroid15png"];
 
 
-            function createAsteroids() {
-                var rand = Math.floor(Math.random() * asteroidArray.length);
-								var asteroidz = new createjs.Bitmap(preload.getResult(asteroidArray[rand]));
-								return asteroids.addChild(asteroidz);
-            }
 
-            interval = setInterval(function(){
-                randAsteroid = createAsteroids();
-								zim.centerReg(randAsteroid);
-                randAsteroid.x = zim.rand(stageW);
-                randAsteroid.y = -150;
-                randAsteroid.r = zim.rand(.1,5,false);
+						makeObstacle = function(){
+
+								if(tieCheck){
+									obstacle = new createjs.Bitmap(preload.getResult("tieFighter"));
+									zim.scale(obstacle, .2);
+									obstacle.r = 0;
+									obstacle.rotation = zim.rand(-10, 10);
+									obstacle.x = zim.rand(stageW);
+									createjs.Tween.get(obstacle).to({y:stageH+150, x:Math.random()*stageW}, 3000).call(removeObstacle);
+								} else {
+			            var rand = Math.floor(Math.random() * asteroidArray.length);
+									obstacle = new createjs.Bitmap(preload.getResult(asteroidArray[rand]));
+	                obstacle.r = zim.rand(.1,5,false);
+									obstacle.x = zim.rand(stageW);
+									createjs.Tween.get(obstacle).to({y:stageH+150}, 3000).call(removeObstacle);
+								}
+
+								obstacles.addChild(obstacle);
+								zim.centerReg(obstacle);
+                obstacle.y = -300;
                 stage.update();
 
-                createjs.Tween.get(randAsteroid).to({y:stageH+150}, 5000).call(removeAsteroids);
 
-            }, 2000);
 
-            function removeAsteroids(e) {
-                asteroids.removeChild(e.target);
+            }
+						interval = setInterval(makeObstacle, 800);
+            function removeObstacle(e) {
+                obstacles.removeChild(e.target);
                 stage.update();
                 console.log("gone");
             }
@@ -304,13 +368,13 @@ frame.on("ready", function() {
         var falconX;
         function createLasers(){
 					console.log("created laser");
-            var laser1 = new zim.Rectangle(5,15,"red");
+            var laser1 = new zim.Rectangle(5,15,"#c0392b");
             laser1.x = falconX + 10;
             laser1.y = stageH/5*4;
             lasers.addChild(laser1);
 						laser1.cache(0,0,5,15);
 
-            var laser2 = new zim.Rectangle(5,15,"red");
+            var laser2 = new zim.Rectangle(5,15,"#c0392b");
             laser2.x = falconX - 10;
             laser2.y = stageH/5*4;
             lasers.addChild(laser2);
@@ -363,7 +427,7 @@ frame.on("ready", function() {
             wholeFalcon.addChild(falcon);
         });
 
-        var asteroid;
+        var obstacle;
         var laser;
 
         createjs.Ticker.framerate = 60;
@@ -376,6 +440,8 @@ frame.on("ready", function() {
 
             if(startCheck) {
                 warningAppear();
+								hyperDriveWarning();
+								fighterWarning();
 
                 if(clickTest){
                     createLasers();
@@ -383,41 +449,68 @@ frame.on("ready", function() {
                     clickTest = false;
                 }
 
-                for(i=0;i<asteroids.numChildren; i++){
-                    asteroid = asteroids.getChildAt(i);
-                    asteroid.rotation+= asteroid.r;
-                    if (zim.hitTestCircle(asteroid, falcon)) {
+                for(i=0;i<obstacles.numChildren; i++){
+                    obstacle = obstacles.getChildAt(i);
+                    obstacle.rotation+= obstacle.r;
+                    if (zim.hitTestCircle(obstacle, falcon)) {
                         console.log("falcon hit");
                         wholeFalcon.removeChild(falcon);
                         startCheck = false;
                         scrollerSpeed = 0;
                         clearInterval(interval);
+
 												stage.addChild(endScreen);
                     }
 
                     for(j=0;j<lasers.numChildren;j++) {
                         laser = lasers.getChildAt(j);
-                        if (zim.hitTestRect(asteroid, laser)) {
+                        if (zim.hitTestRect(obstacle, laser)) {
                             console.log("asteroid destroyed");
-                            asteroid.x = -2000;
+														createjs.Tween.removeTweens(obstacle);
+                            obstacle.x = -2000;
                         }
                     }
 
                 }
 
-                // asteroidBelt appears
+                // Asteroid Belt appears
 
-                if(scrollerMid.y > 110 && scrollerMid.y < 600 || (scrollerMid.y > -7465 && scrollerMid.y < -7000)) {
-                    if(!scrollCheck){
-                        asteroidBelt();
+                if(scrollerMid.y > 110 && scrollerMid.y < 640) {
+
+								    if(!scrollCheck){
+
+                        obstacleFactory();
                         scrollCheck = true;
                     }
                 } else {
                     if(scrollCheck){
                         clearInterval(interval);
+
                     }
                     scrollCheck = false;
                 }
+
+								// tie fighters appear
+								if(tieCheck == false && scrollerMid.y > -4960 && scrollerMid.y <-3960) {
+
+									tieCheck = true;
+									interval = setInterval(makeObstacle, 800);
+								}
+
+								// hyperdrive option
+
+                if(scrollerMid.y > -7470 && scrollerMid.y < -5000) {
+                    hyperDrive();
+                } else {
+									scroller3.speed = 3;
+									scroller2.speed = 3;
+									scroller1.speed = 3;
+								}
+
+								if(scrollerMid.y > -3945 && scrollerMid.y < 0){
+									console.log("YOU WIN!");
+										stage.addChild(winScreen);
+								}
 
                 stage.update();
               }
@@ -426,11 +519,79 @@ frame.on("ready", function() {
             stage.update();
         });
 
+// hyperdrive function
+
+				function hyperDrive(){
+					window.addEventListener("keydown", function(e){
+
+						if (scroller3.speed == 3 && scroller2.speed == 3 && scroller1.speed == 3){
+							if (e.keyCode == 32){
+								scroller3.speed = 85;
+								scroller2.speed = 85;
+								scroller1.speed = 85;
+							}
+						} else {
+							if (e.keyCode == 32){
+								scroller3.speed = 3;
+								scroller2.speed = 3;
+								scroller1.speed = 3;
+							}
+						}
+					});
+				};
+
+
+// function used to create warning for tie fighters
+
+				function fighterWarning(){
+						if((scrollerMid.y > -5000 && scrollerMid.y < -4990) || (scrollerMid.y > -4985 && scrollerMid.y < -4975) || (scrollerMid.y > -4970 && scrollerMid.y < -4960)){
+
+
+								tieFighterWarning.regX = tieFighterWarning.getBounds().width/2;
+								tieFighterWarning.regY = tieFighterWarning.getBounds().height/2;
+								tieFighterWarning.x = stageW/2;
+								tieFighterWarning.y = stageH/2;
+								zim.scale(tieFighterWarning, .5);
+
+									 stage.addChild(tieFighterWarning);
+									 stage.update();
+
+						} else {
+								stage.removeChild(tieFighterWarning);
+								// createjs.Sound.stop("jumpToLightspeed");
+						}
+						stage.update();
+				};
+
+// function used to create caption for ability to go into hyperspeed
+
+function hyperDriveWarning(){
+		// hyper speed warning
+		if(scrollerMid.y > -7470 && scrollerMid.y < -7300){
+			createjs.Sound.play("jumpToLightspeed");
+
+				hyperspeedCaption.regX = hyperspeedCaption.getBounds().width/2;
+				hyperspeedCaption.regY = hyperspeedCaption.getBounds().height/2;
+				hyperspeedCaption.x = stageW/2;
+				hyperspeedCaption.y = stageH/2;
+				zim.scale(hyperspeedCaption, .7);
+
+					 stage.addChild(hyperspeedCaption);
+					 stage.update();
+
+		} else {
+				stage.removeChild(hyperspeedCaption);
+				createjs.Sound.stop("jumpToLightspeed");
+		}
+		stage.update();
+};
+
+
 // function used to create warning sign for upcoming asteroid field
 
         function warningAppear(){
             // asteroid Field warning
-            if((scrollerMid.y > 50 && scrollerMid.y < 60) || (scrollerMid.y > 70 && scrollerMid.y < 80) || (scrollerMid.y > 90 && scrollerMid.y < 100)|| (scrollerMid.y > 110 && scrollerMid.y < 120)|| (scrollerMid.y > 130 && scrollerMid.y < 140)){
+            if((scrollerMid.y > 50 && scrollerMid.y < 60) || (scrollerMid.y > 70 && scrollerMid.y < 80) || (scrollerMid.y > 90 && scrollerMid.y < 100)|| (scrollerMid.y > 110 && scrollerMid.y < 120) ){
 							createjs.Sound.play("asteroidWarning");
 
 								warningAsteroid.regX = warningAsteroid.getBounds().width/2;
@@ -448,10 +609,6 @@ frame.on("ready", function() {
             }
         }
 
-				function tieFightersAppear(){
-
-				}
-
 
 
 
@@ -459,6 +616,7 @@ frame.on("ready", function() {
     }
 
 });
+
 
 
 
